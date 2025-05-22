@@ -83,16 +83,17 @@ def write_output(route, cost):
     with open("output.txt", "w") as file:
         file.write(f"{cost} {len(route)-skipped-1}\n")
         for city in route:
-            file.write(f"{city[0]}\n")
+            if city[0] != -1:
+                file.write(f"{city[0]}\n")
 
 
 def main():
     cities, route = [], []
-    #generate_input(1000)
+    generate_input(1000)
     cities = read_input()
     route, cost = solver_1.solve(cities)
     write_output(route, cost)
-    graph(cities, route, cost)
+    #graph(cities, route, cost)
 
 
 if __name__ == "__main__":
