@@ -24,8 +24,14 @@ def generate_input(number_of_cities):
 def graph(cities, route, cost):
     x_axis = [city[1] for city in cities]
     y_axis = [city[2] for city in cities]
-    x_axis1 = [city[1] for city in route]
-    y_axis1 = [city[2] for city in route]
+    x_axis1 = []
+    y_axis1 = []
+    for city in route:
+        if city[0] != -1:
+            x_axis1.append(city[1])
+            y_axis1.append(city[2])
+    #x_axis1 = [city[1] for city in route]
+    #y_axis1 = [city[2] for city in route]
 
     # plt.plot(x_axis, y_axis, "+", color="purple")
     plt.plot(x_axis1, y_axis1, "-", color="blue")
@@ -68,12 +74,13 @@ def write_output(cost, n_v, route):
         for city in route:
             file.write(f"{city[0]}\n")
 
+    
 
 def main():
     cities, route = [], []
     generate_input(1000)
     cities = read_input()
-    route, cost = solver_2.solve(cities)
+    route, cost = solver_1.solve(cities)
     graph(cities, route, cost)
 
 
