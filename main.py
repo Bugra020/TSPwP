@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+import sys
 import solver_1
 
 def generate_input(number_of_cities):
@@ -41,11 +42,23 @@ def read_input():
     cities = []
     with open("input.txt", "r") as file:
         lines = file.readlines()
+        min_x, min_y = sys.maxsize, sys.maxsize
         for line in lines:
             city = list(map(int, line.strip().split()))
+            city.append(0)
             cities.append(city)
-    return cities
 
+            if city[1] < min_x:
+                min_x = city[1]
+            if city[2] < min_y:
+                min_y = city[2]
+
+        for city in cities:
+            city[1] -= min_x
+            city[2] -= min_y
+
+
+    return cities
 
 def write_output(cost, n_v, route):
     with open("output.txt", "w") as file:
@@ -56,9 +69,9 @@ def write_output(cost, n_v, route):
 
 def main():
     cities, route = [], []
-    generate_input(1000)
+    generate_input(100)
     cities = read_input()
-    route = solver_1.solve(cities)
+    route = solver_1.tsp_2opt(cities)
     graph(cities, route)
 
 
