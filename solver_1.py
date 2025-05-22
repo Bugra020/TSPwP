@@ -1,4 +1,5 @@
 import math
+import random
 
 
 def distance(a, b):
@@ -55,20 +56,44 @@ def check_penalty(route):
 
     return route
 
+
 def new_route(route):
-    new_route =[]
+    new_route = []
     for city in route:
-        if(city[0] != -1):
+        if city[0] != -1:
             new_route.append(city)
-    
+
     return new_route
+
+
+def swap_improve(route):
+    best = route[:]
+    best_cost = calc_cost(best)
+    n = len(best)
+
+    for _ in range(int(math.pow(len(route), 2) / 10)):
+        i = random.randint(1, n - 3)
+        k = random.randint(i + 1, n - 2)
+
+        if best[i][0] == -1 or best[k][0] == -1:
+            continue
+
+        new_route = best[:i] + best[i : k + 1][::-1] + best[k + 1 :]
+        new_cost = calc_cost(new_route)
+
+        if new_cost < best_cost:
+            best = new_route
+            best_cost = new_cost
+    
+    return best
+
 
 def solve(cities):
     route = greedy_tour(cities)
+    route = swap_improve(route)
     for _ in range(0, 6):
         route = check_penalty(route)
         route = new_route(route)
-    
-    #route = greedy_tour(cities)
+    route = swap_improve(route)
 
     return route, calc_cost(route)
