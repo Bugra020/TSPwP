@@ -37,6 +37,16 @@ def calc_cost(route):
     return total_cost
 
 
+def check_penalty(route):
+    for i in range(0,len(route)-3):
+        if((distance(route[i],route[i+1])+distance(route[i+1],route[i+2]))<distance(route[i],route[i+2])+route[i+1][3]):
+            route[i+1][0] = -1
+    
+    return route
+
+
+
 def solve(cities):
-    route = greedy_tour(cities)
+    route =check_penalty(greedy_tour(cities))
+    
     return route, calc_cost(route)
