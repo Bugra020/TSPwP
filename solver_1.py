@@ -49,9 +49,20 @@ def check_penalty(route):
 
     return route
 
+def new_route(route):
+    new_route =[]
+    for city in route:
+        if(city[0] != -1):
+            new_route.append(city)
+    
+    return new_route
 
 def solve(cities):
-    route = check_penalty(greedy_tour(cities))
+    route = greedy_tour(cities)
+    for _ in range(0,100):
+        route = check_penalty(route)
+        route = new_route(route)
+    
     #route = greedy_tour(cities)
 
     return route, calc_cost(route)
