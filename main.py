@@ -93,7 +93,7 @@ def main():
     cities = read_input()
     route, cost = solver_1.solve(cities)
     write_output(route, cost)
-    #graph(cities, route, cost)
+    graph(cities, route, cost)
 
 
 if __name__ == "__main__":

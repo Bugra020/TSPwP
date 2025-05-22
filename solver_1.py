@@ -1,5 +1,4 @@
 import math
-import random
 
 
 def distance(a, b):
@@ -16,7 +15,14 @@ def greedy_tour(cities):
     city_dict = {city[0]: city for city in cities}
 
     while unvisited:
-        next_id = min(unvisited, key=lambda i: distance(current, city_dict[i]))
+        min_dist = float("inf")
+        next_id = None
+        for i in unvisited:
+            dist = distance(current, city_dict[i])
+            if dist < min_dist:
+                min_dist = dist
+                next_id = i
+
         current = city_dict[next_id]
         tour.append(current)
         unvisited.remove(next_id)
@@ -52,6 +58,6 @@ def check_penalty(route):
 
 def solve(cities):
     route = check_penalty(greedy_tour(cities))
-    #route = greedy_tour(cities)
+    # route = greedy_tour(cities)
 
     return route, calc_cost(route)
