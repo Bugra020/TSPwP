@@ -59,7 +59,7 @@ def new_route(route):
 
 def solve(cities):
     route = greedy_tour(cities)
-    for _ in range(0,100):
+    for _ in range(0, 6):
         route = check_penalty(route)
         route = new_route(route)
     
