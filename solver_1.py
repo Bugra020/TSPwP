@@ -71,7 +71,7 @@ def swap_improve(route):
     best_cost = calc_cost(best)
     n = len(best)
 
-    for _ in range(int(math.pow(len(route), 2) / 10)):
+    for _ in range(int(math.pow(len(route), 2) / 50)):
         i = random.randint(1, n - 3)
         k = random.randint(i + 1, n - 2)
 
@@ -91,9 +91,9 @@ def swap_improve(route):
 def solve(cities):
     route = greedy_tour(cities)
     route = swap_improve(route)
-    for _ in range(0, 6):
+    for _ in range(0, 10):
         route = check_penalty(route)
         route = new_route(route)
-    route = swap_improve(route)
+        route = swap_improve(route)
 
     return route, calc_cost(route)
