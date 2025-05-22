@@ -1,7 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import sys
-import solver_1, solver_2
+import solver_1
 
 
 def generate_input(number_of_cities):
