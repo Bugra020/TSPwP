@@ -1,7 +1,8 @@
 import random
 import matplotlib.pyplot as plt
 import sys
-import solver_1
+import solver_1, solver_2
+
 
 def generate_input(number_of_cities):
     inputs = []
@@ -20,7 +21,7 @@ def generate_input(number_of_cities):
     return inputs
 
 
-def graph(cities, route):
+def graph(cities, route, cost):
     x_axis = [city[1] for city in cities]
     y_axis = [city[2] for city in cities]
     x_axis1 = [city[1] for city in route]
@@ -33,7 +34,8 @@ def graph(cities, route):
         x_axis, y_axis, c=[city[3] for city in cities], cmap="inferno"
     )
     cbar = plt.colorbar(scatter)
-    cbar.set_label("Penalty Value")
+    cbar.set_label("penalty")
+    plt.title(f"cost:{cost}, visited cities:{len(route)-1}")
 
     plt.show()
 
@@ -57,8 +59,8 @@ def read_input():
             city[1] -= min_x
             city[2] -= min_y
 
-
     return cities
+
 
 def write_output(cost, n_v, route):
     with open("output.txt", "w") as file:
@@ -69,10 +71,10 @@ def write_output(cost, n_v, route):
 
 def main():
     cities, route = [], []
-    generate_input(100)
+    generate_input(1000)
     cities = read_input()
-    route = solver_1.tsp_2opt(cities)
-    graph(cities, route)
+    route, cost = solver_2.solve(cities)
+    graph(cities, route, cost)
 
 
 if __name__ == "__main__":
