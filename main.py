@@ -7,7 +7,7 @@ import solver_1
 def generate_input(number_of_cities):
     inputs = []
     for id in range(0, number_of_cities):
-        penalty = random.randint(1, number_of_cities / 10)
+        penalty = random.randint(1, number_of_cities / 2)
         rand_x, rand_y = random.randint(
             -number_of_cities, number_of_cities
         ), random.randint(-number_of_cities, number_of_cities)
