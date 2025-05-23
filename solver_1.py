@@ -56,6 +56,16 @@ def check_penalty(route):
 
     return route
 
+def check_penalty2(route):
+    for i in range(0,len(route)-5):
+        if( 
+            distance(route[i],route[i+1]) + distance(route[i+1],route[i+2]) + distance(route[i+2],route[i+3])+distance(route[i+3],route[i+4])
+        ) > distance(route[i],route[i+4]) + route[i+1][3] + route[i+2][3] + route[i+3][3]:
+            route[i+1][0] = -1
+            route[i+2][0] = -1
+            route[i+3][0] = -1
+
+    return route
 
 def new_route(route):
     new_route = []
@@ -91,8 +101,9 @@ def swap_improve(route):
 def solve(cities):
     route = greedy_tour(cities)
     route = swap_improve(route)
-    for _ in range(0, 10):
+    for _ in range(0, 3):
         route = check_penalty(route)
+        route = check_penalty2(route)
         route = new_route(route)
         route = swap_improve(route)
 
