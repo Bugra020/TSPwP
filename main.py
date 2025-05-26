@@ -2,6 +2,7 @@ import random
 import matplotlib.pyplot as plt
 import sys
 import solver_1
+import solver_1
 
 
 def generate_input(number_of_cities):
@@ -69,11 +70,9 @@ def read_input():
                 min_x = city[1]
             if city[2] < min_y:
                 min_y = city[2]
-
         for city in cities:
             city[1] -= min_x
             city[2] -= min_y
-
     return cities
 
 
@@ -85,12 +84,9 @@ def write_output(route, cost):
 
     with open("output.txt", "w") as file:
         file.write(f"{cost} {len(route)-skipped-1}\n")
-        for i in range(len(route)):
-            if i == 0:
-                continue
-            if route[i][0] != -1:
-                file.write(f"{route[i][0]}\n")
-
+        for city in route[:-1]:
+            if city[0] != -1:
+                file.write(f"{city[0]}\n")
 
 def main():
     cities, route = [], []
