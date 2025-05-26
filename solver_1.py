@@ -13,13 +13,14 @@ def distance(a :City, b: City) -> int:
 
 
 def greedy_tour(cities: Route) -> Route:
-    unvisited = set(range(1, len(cities)))
+    start_city = random.choice(cities)
     city_dict = {city[0]: city for city in cities}
-    tour = [cities[0]]
-    current = cities[0]
+    unvisited = set(city[0] for city in cities if city[0] != start_city[0])
 
+    tour = [start_city]
+    current = start_city
     while unvisited:
-        next_id = min(unvisited, key=lambda i: distance(current, city_dict[i]))
+        next_id = min(unvisited, key=lambda cid: distance(current, city_dict[cid]))
         current = city_dict[next_id]
         tour.append(current)
         unvisited.remove(next_id)
