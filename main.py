@@ -7,7 +7,7 @@ import solver_1
 def generate_input(number_of_cities):
     inputs = []
     for id in range(0, number_of_cities):
-        penalty = random.randint(1, number_of_cities / 2)
+        penalty = random.randint(1, number_of_cities / 10)
         rand_x, rand_y = random.randint(
             -number_of_cities, number_of_cities
         ), random.randint(-number_of_cities, number_of_cities)
@@ -57,8 +57,11 @@ def read_input():
     with open("input.txt", "r") as file:
         lines = file.readlines()
         min_x, min_y = sys.maxsize, sys.maxsize
+        penalty = lines[0]
+        lines.pop(0) 
         for line in lines:
             city = list(map(int, line.strip().split()))
+            city.append(int(penalty))
             city.append(0)
             cities.append(city)
 

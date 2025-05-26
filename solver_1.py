@@ -64,8 +64,8 @@ def check_penalty2(route):
             route[i+1][0] = -1
             route[i+2][0] = -1
             route[i+3][0] = -1
-
     return route
+
 
 def new_route(route):
     new_route = []
@@ -101,13 +101,15 @@ def swap_improve(route):
 
 
 def solve(cities):
+    print("sa")
     route = greedy_tour(cities)
     #route = swap_improve(route)
     for _ in range(0, 5):
+        print("sa")
         route = check_penalty(route)
         route = check_penalty2(route)
         route = new_route(route)
         route = swap_improve(route)
         
-        
+       
     return route, calc_cost(route)
