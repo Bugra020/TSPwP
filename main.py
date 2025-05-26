@@ -85,9 +85,11 @@ def write_output(route, cost):
 
     with open("output.txt", "w") as file:
         file.write(f"{cost} {len(route)-skipped-1}\n")
-        for city in route:
-            if city[0] != -1:
-                file.write(f"{city[0]}\n")
+        for i in range(len(route)):
+            if i == 0:
+                continue
+            if route[i][0] != -1:
+                file.write(f"{route[i][0]}\n")
 
 
 def main():

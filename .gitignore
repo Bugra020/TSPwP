@@ -120,5 +120,4 @@ dmypy.json
 #Pycharm IDE
 .idea
 
-input.txt
-output.txt
+*.txt
