@@ -71,7 +71,7 @@ def swap_improve(route: Route) -> Route:
     best = route[:]
     best_cost = calc_cost(best)
     n = len(best)
-    tries = int(n * n / 50)
+    tries = int(n / math.log10(n) * 10)
 
     for _ in range(tries):
         i, k = sorted(random.sample(range(1, n - 2), 2))
