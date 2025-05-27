@@ -13,6 +13,10 @@ def distance(a :City, b: City) -> int:
 
 
 def greedy_tour(cities: Route) -> Route:
+    # selcets a random city to start
+    # forms the path to the shortest city
+    # creates a TSP path not improve later (not TSPwP)
+
     start_city = random.choice(cities)
     city_dict = {city[0]: city for city in cities}
     unvisited = set(city[0] for city in cities if city[0] != start_city[0])
@@ -44,6 +48,10 @@ def calc_cost(route: Route) -> int:
 
 
 def penalty_improve(route: Route, window: int) -> Route:
+    # iterates over the route and checks whether skipping (window - 2) cities
+    # and connecting endpoints is shorter than visiting them
+    # considering the penalties
+
     i = 0
     while i <= len(route) - window:
         real_indices = []
@@ -52,23 +60,33 @@ def penalty_improve(route: Route, window: int) -> Route:
             if route[j][0] != -1:
                 real_indices.append(j)
             j += 1
+
         if len(real_indices) < window:
             break
 
         ci = real_indices
-        segment_dist = sum(distance(route[ci[t]], route[ci[t + 1]]) for t in range(window - 1))
+
+        # calculate the distance of the full part (visiting all)
+        part_dist = sum(distance(route[ci[t]], route[ci[t + 1]]) for t in range(window - 1))
+        # calculate direct shortcut distance from first to last
         direct_dist = distance(route[ci[0]], route[ci[-1]])
+        # sum the penalties for skipped cities
         penalty_sum = sum(route[ci[t]][3] for t in range(1, window - 1))
 
-        if segment_dist > direct_dist + penalty_sum:
+        if part_dist > direct_dist + penalty_sum:
             for t in range(1, window - 1):
                 route[ci[t]] = (-1, 0, 0, route[ci[t]][3])
+
         i = real_indices[0] + 1
 
     return route
 
 
 def swap_improve(route: Route) -> Route:
+    # improves the route by applying random swaps
+    # avoids modifying skipped cities
+    # tries n / log(n) * 10 iterations
+
     best = route[:]
     best_cost = calc_cost(best)
     n = len(best)
@@ -76,6 +94,7 @@ def swap_improve(route: Route) -> Route:
 
     for _ in range(tries):
         i, k = sorted(random.sample(range(1, n - 2), 2))
+
         if best[i][0] == -1 or best[k][0] == -1:
             continue
 

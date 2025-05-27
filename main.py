@@ -1,7 +1,13 @@
 import random
-import matplotlib.pyplot as plt
 import sys
-import solver_1
+import solver
+
+# if no matplotlib library then fallback to no graph mode
+graph_mode = True
+try:
+    import matplotlib.pyplot as plt
+except:
+    graph_mode = False
 
 # usage: python main inputFilePath outputFilePath
 
@@ -68,16 +74,16 @@ def graph(cities, route, cost):
     plt.show()
 
 
-def main():
+def main(plotlib):
     input_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    # cities = generate_input(1000)  # optional: generate new input
+    # cities = generate_input(1000)
     cities = read_input(input_path)
-    route, cost = solver_1.solve(cities)
+    route, cost = solver.solve(cities)
     write_output(route, cost, output_path)
-    graph(cities, route, cost)
-
+    if plotlib:
+        graph(cities, route, cost)
 
 if __name__ == "__main__":
-    main()
+    main(graph_mode)
