@@ -112,9 +112,10 @@ def solve(cities: Route) -> Tuple[Route, int]:
     route = greedy_tour(cities)
     route = swap_improve(route)
 
-    for _ in range(5):
-        route = penalty_improve(route, 3)
-        route = penalty_improve(route, 5)
+    exp_len = math.ceil(math.log10(len(cities)) + 1)
+    for _ in range(exp_len):
+        for i in range(exp_len):
+            route = penalty_improve(route, i*2+3)
         route = swap_improve(route)
 
     return route, calc_cost(route)

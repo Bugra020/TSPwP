@@ -63,11 +63,11 @@ def graph(cities, route, cost):
     x_route = [city[1] for city in route if city[0] != -1]
     y_route = [city[2] for city in route if city[0] != -1]
 
-    plt.plot(x_route, y_route, "-", color="blue")  # draw the path
+    plt.plot(x_route, y_route, "-", color="red")  # draw the path
 
     scatter = plt.scatter(x_all, y_all, c=[city[3] for city in cities], cmap="inferno")
-    cbar = plt.colorbar(scatter)
-    cbar.set_label("penalty")
+    #cbar = plt.colorbar(scatter)
+    #cbar.set_label("penalty")
 
     skipped = sum(1 for city in route if city[0] == -1)
     plt.title(f"cost: {cost}, visited cities: {len(route) - skipped - 1}")
@@ -78,7 +78,7 @@ def main(plotlib):
     input_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    # cities = generate_input(1000)
+    #cities = generate_input(1000)
     cities = read_input(input_path)
     route, cost = solver.solve(cities)
     write_output(route, cost, output_path)
